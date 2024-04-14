@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-abstract class Controller
+use \Illuminate\Routing\Controller as topController;
+
+abstract class Controller extends topController
 {
-    //
+    use \Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 }
