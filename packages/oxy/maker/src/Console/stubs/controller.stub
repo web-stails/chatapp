@@ -1,0 +1,37 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Http\Controllers\Controller;
+use App\Builders\DummyBuilderNamespace;
+use App\Http\Resources\DummyCollectionNamespace;
+use App\Http\Resources\DummyResourceNamespace;
+use App\Models\DummyModelNamespace;
+
+
+class DummyClass extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @param \App\Builders\DummyBuilderNamespace $builder
+     *
+     * @return \App\Http\Resources\DummyCollectionNamespace
+     */
+    public function index(DummyBuilder $builder): DummyCollection
+    {
+        return DummyCollection::make($builder->handle());
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\Models\DummyModelNamespace $DummyModelVariable
+     *
+     * @return \App\Http\Resources\DummyResourceNamespace
+     */
+    public function show(DummyModel $DummyModelVariable): DummyResource
+    {
+        return DummyResource::make($DummyModelVariable);
+    }
+}

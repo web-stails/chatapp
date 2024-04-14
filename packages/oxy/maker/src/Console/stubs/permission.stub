@@ -1,0 +1,49 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Contracts\PermissionDependencyContract;
+use App\Contracts\PermissionGroupContract;
+use App\Contracts\SlugContract;
+use App\Enums\PermissionGroups\PermissionGroupsEnum;
+use App\Traits\Enums\PermissionDependencyEnumTrait;
+use App\Traits\Enums\PermissionGroupEnumTrait;
+use App\Traits\Enums\PermissionSlugEnumTrait;
+
+enum DummyClass implements PermissionDependencyContract, PermissionGroupContract, SlugContract
+{
+    use PermissionDependencyEnumTrait;
+    use PermissionGroupEnumTrait;
+    use PermissionSlugEnumTrait;
+
+    case Create;
+
+    case Read;
+
+    case Update;
+
+    case Delete;
+
+    /**
+     * Возвращает дополнительные разрешения необходимые для текущего.
+     *
+     * @return array|null
+     */
+    public function dependencies(): ?array
+    {
+        return match ($this) {
+            self::Create, self::Update, self::Delete => [self::Read],
+            default => null,
+        };
+    }
+
+    /**
+     * Возвращает группу в которую входят разрешения.
+     *
+     * @return \App\Enums\PermissionGroups\PermissionGroupsEnum|null
+     */
+    public static function group(): ?PermissionGroupsEnum
+    {
+        return null;
+    }
+}

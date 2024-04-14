@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Enums\PermissionGroups;
+
+use App\Contracts\SlugContract;
+use Illuminate\Support\Str;
+
+enum PermissionGroupsEnum implements SlugContract
+{
+    public function slug(): string
+    {
+        return Str::snake($this->name);
+    }
+}

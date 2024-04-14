@@ -1,0 +1,49 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Models\User;
+use App\Enums\Permissions\DummyPermissionNamespace;
+
+class DummyClass
+{
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(User $user): bool
+    {
+        return $user->isCan(DummyPermission::Read->slug());
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user): bool
+    {
+        return $user->isCan(DummyPermission::Read->slug());
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        return $user->isCan(DummyPermission::Create->slug());
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user): bool
+    {
+        return $user->isCan(DummyPermission::Update->slug());
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user): bool
+    {
+        return $user->isCan(DummyPermission::Delete->slug());
+    }
+}

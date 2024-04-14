@@ -1,0 +1,20 @@
+<?php
+
+use App\Enums\Permissions\DummyPermissionNamespace;
+use App\Models\DummyModelNamespace;
+
+$group = 'DummyGroup';
+
+it('DummyGroupName index without permission', function () {
+    $this
+        ->get(route('DummyRouteGroup.index'))
+        ->assertOk();
+})->group('feature', $group);
+
+it('DummyGroupName show without permission', function () {
+    $model = DummyModel::factory()->create();
+
+    $this
+        ->get(route('DummyRouteGroup.show', $model->id))
+        ->assertOk();
+})->group('feature', $group);

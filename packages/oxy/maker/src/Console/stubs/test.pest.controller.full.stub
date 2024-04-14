@@ -1,0 +1,128 @@
+<?php
+
+use App\Enums\Permissions\DummyPermissionNamespace;
+use App\Models\DummyModelNamespace;
+
+$group = 'DummyGroup';
+
+/**
+* Index
+*/
+
+it('DummyGroupName index with permission', function () {
+    $user = getUserWithPermissions(DummyPermission::Read->slug());
+
+    $this
+        ->actingAs($user, 'sanctum')
+        ->get(route('DummyRouteGroup.index'))
+        ->assertOk();
+})->group('feature', $group);
+
+it('DummyGroupName index without permission', function () {
+    $user = getUserWithPermissions();
+
+    $this
+        ->actingAs($user, 'sanctum')
+        ->get(route('DummyRouteGroup.index'))
+        ->assertStatus(403);
+})->group('feature', $group);
+
+/**
+* Show
+*/
+
+it('DummyGroupName show with permission', function () {
+    $user  = getUserWithPermissions(DummyPermission::Read->slug());
+    $model = DummyModel::factory()->create();
+
+    $this
+        ->actingAs($user, 'sanctum')
+        ->get(route('DummyRouteGroup.show', $model->id))
+        ->assertOk();
+})->group('feature', $group);
+
+it('DummyGroupName show without permission', function () {
+    $user  = getUserWithPermissions();
+    $model = DummyModel::factory()->create();
+
+    $this
+        ->actingAs($user, 'sanctum')
+        ->get(route('DummyRouteGroup.show', $model->id))
+        ->assertStatus(403);
+})->group('feature', $group);
+
+/**
+* Store
+*/
+
+it('DummyGroupName create with permission', function () {
+    $user       = getUserWithPermissions(DummyPermission::Create->slug());
+    $attributes = DummyModel::factory()->raw();
+
+    $this
+        ->actingAs($user, 'sanctum')
+        ->postJson(route('DummyRouteGroup.store'), $attributes)
+        ->assertStatus(201);
+})->group('feature', $group);
+
+it('DummyGroupName create without permission', function () {
+    $user       = getUserWithPermissions();
+    $attributes = DummyModel::factory()->raw();
+
+    $this
+        ->actingAs($user, 'sanctum')
+        ->postJson(route('DummyRouteGroup.store'), $attributes)
+        ->assertStatus(403);
+})->group('feature', $group);
+
+/**
+* Update
+*/
+
+it('DummyGroupName update with permission', function () {
+    $user = getUserWithPermissions(DummyPermission::Update->slug());
+
+    $attributes        = DummyModel::factory()->create();
+    $attributesUpdated = DummyModel::factory()->raw();
+
+    $this
+        ->actingAs($user, 'sanctum')
+        ->putJson(route('DummyRouteGroup.update', $attributes->id), $attributesUpdated)
+        ->assertOk();
+})->group('feature', $group);
+
+it('DummyGroupName update without permission', function () {
+    $user = getUserWithPermissions();
+
+    $attributes        = DummyModel::factory()->create();
+    $attributesUpdated = DummyModel::factory()->raw();
+
+    $this
+        ->actingAs($user, 'sanctum')
+        ->putJson(route('DummyRouteGroup.update', $attributes->id), $attributesUpdated)
+        ->assertStatus(403);
+})->group('feature', $group);
+
+/**
+* Destroy
+*/
+
+it('DummyGroupName destroy with permission', function () {
+    $user       = getUserWithPermissions(DummyPermission::Delete->slug());
+    $attributes = DummyModel::factory()->create();
+
+    $this
+        ->actingAs($user, 'sanctum')
+        ->deleteJson(route('DummyRouteGroup.destroy', $attributes->id))
+        ->assertStatus(204);
+})->group('feature', $group);
+
+it('DummyGroupName destroy without permission', function () {
+    $user       = getUserWithPermissions();
+    $attributes = DummyModel::factory()->create();
+
+    $this
+        ->actingAs($user, 'sanctum')
+        ->deleteJson(route('DummyRouteGroup.destroy', $attributes->id))
+        ->assertStatus(403);
+})->group('feature', $group);

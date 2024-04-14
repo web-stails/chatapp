@@ -1,0 +1,83 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Http\Controllers\Controller;
+use App\Builders\DummyBuilderNamespace;
+use App\Http\Resources\DummyCollectionNamespace;
+use App\Http\Resources\DummyResourceNamespace;
+use App\Http\Requests\DummyStoreRequestNamespace;
+use App\Http\Requests\DummyUpdateRequestNamespace;
+use App\Models\DummyModelNamespace;
+use App\Services\DummyServiceNamespace;
+use Illuminate\Http\Response;
+
+class DummyClass extends Controller
+{
+    public function __construct(private readonly DummyService $service)
+    {
+        $this->authorizeResource(DummyModel::class, 'DummyModelRouteParam');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param \App\Builders\DummyBuilderNamespace $builder
+     *
+     * @return \App\Http\Resources\DummyCollectionNamespace
+     */
+    public function index(DummyBuilder $builder): DummyCollection
+    {
+        return DummyCollection::make($builder->handle());
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\Models\DummyModelNamespace $DummyModelVariable
+     *
+     * @return \App\Http\Resources\DummyResourceNamespace
+     */
+    public function show(DummyModel $DummyModelVariable): DummyResource
+    {
+        return DummyResource::make($DummyModelVariable);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \App\Http\Requests\DummyStoreRequestNamespace $request
+     *
+     * @return \App\Http\Resources\DummyResourceNamespace
+     */
+    public function store(DummyStoreRequest $request): DummyResource
+    {
+        return DummyResource::make($this->service->create($request->validated()));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \App\Http\Requests\DummyUpdateRequestNamespace $request
+     *
+     * @return \App\Http\Resources\DummyResourceNamespace
+     */
+    public function update(DummyUpdateRequest $request, DummyModel $DummyModelVariable): DummyResource
+    {
+        return DummyResource::make($this->service->update($DummyModelVariable, $request->validated()));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \App\Models\DummyModelNamespace $DummyModelVariable
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(DummyModel $DummyModelVariable): Response
+    {
+        $this->service->delete($DummyModelVariable);
+
+        return response()->noContent();
+    }
+}

@@ -1,0 +1,29 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Models\DummyModelNamespace;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class DummyClass extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param Request $request
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        /** @var DummyModel $resource */
+        $resource = $this->resource;
+
+        return [
+            'id'         => $resource->id,
+            'created_at' => $resource->created_at,
+            'updated_at' => $resource->updated_at,
+        ];
+    }
+}

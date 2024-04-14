@@ -1,0 +1,10 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Http\Resources\PaginationResource;
+
+class DummyClass extends PaginationResource
+{
+    public $collects = DummyResource::class;
+}

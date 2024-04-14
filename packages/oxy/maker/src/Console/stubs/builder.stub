@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Database\Eloquent\Builder;
+use App\Models\DummyModelNamespace;
+
+class DummyClass
+{
+    /**
+     * Получить builder модели DummyModel.
+     *
+     * @return Builder
+     */
+    public function handle(): Builder
+    {
+        return DummyModel::query();
+    }
+}
