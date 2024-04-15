@@ -69,7 +69,7 @@ class ChatService extends AbstractModelService
 
     protected function afterCreate(Model $model): void
     {
-        $model->users->sync([
+        $model->users()->sync([
             $this->userAuthor->id,
             $this->userConnection->id
         ]);

@@ -1,0 +1,83 @@
+<?php
+
+namespace App\Http\Controllers\Chats;
+
+use App\Builders\Chats\AdminChatBuilder;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Chats\AdminChatStoreRequest;
+use App\Http\Requests\Chats\AdminChatUpdateRequest;
+use App\Http\Resources\Chats\AdminChatCollection;
+use App\Http\Resources\Chats\AdminChatResource;
+use App\Models\Chat;
+use App\Services\Chats\ChatService;
+use Illuminate\Http\Response;
+
+class AdminChatController extends Controller
+{
+    public function __construct(private readonly ChatService $service)
+    {
+        $this->authorizeResource(Chat::class, 'chat');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param \App\Builders\Chats\AdminChatBuilder $builder
+     *
+     * @return \App\Http\Resources\Chats\AdminChatCollection
+     */
+    public function index(AdminChatBuilder $builder): AdminChatCollection
+    {
+        return AdminChatCollection::make($builder->handle());
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\Models\Chat $chat
+     *
+     * @return \App\Http\Resources\Chats\AdminChatResource
+     */
+    public function show(Chat $chat): AdminChatResource
+    {
+        return AdminChatResource::make($chat);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \App\Http\Requests\Chats\AdminChatStoreRequest $request
+     *
+     * @return \App\Http\Resources\Chats\AdminChatResource
+     */
+    public function store(AdminChatStoreRequest $request): AdminChatResource
+    {
+        return AdminChatResource::make($this->service->create($request->validated()));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \App\Http\Requests\Chats\AdminChatUpdateRequest $request
+     *
+     * @return \App\Http\Resources\Chats\AdminChatResource
+     */
+    public function update(AdminChatUpdateRequest $request, Chat $chat): AdminChatResource
+    {
+        return AdminChatResource::make($this->service->update($chat, $request->validated()));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \App\Models\Chat $chat
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Chat $chat): Response
+    {
+        $this->service->delete($chat);
+
+        return response()->noContent();
+    }
+}
