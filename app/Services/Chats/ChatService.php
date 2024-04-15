@@ -14,6 +14,9 @@ class ChatService extends AbstractModelService
 {
     private User $userAuthor;
     private User $userConnection;
+    public array $relationList = [
+        'user'
+    ];
     /**
      * @return Model
      */

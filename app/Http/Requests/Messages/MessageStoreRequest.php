@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Chats;
+namespace App\Http\Requests\Messages;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChatUpdateRequest extends FormRequest
+class MessageStoreRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,10 +14,9 @@ class ChatUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => [
+            'text' => [
                 'required',
                 'string',
-                'max:255',
             ],
         ];
     }
@@ -30,7 +29,7 @@ class ChatUpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'title' => '«Название»',
+            'text' => '«Сообщение»',
         ];
     }
 }

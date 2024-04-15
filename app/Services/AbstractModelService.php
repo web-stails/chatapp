@@ -115,8 +115,8 @@ abstract class AbstractModelService
      */
     public static function loadRelation(Model $model): Model
     {
-        return !empty(static::$relationList)
-            ? $model->load(static::$relationList ?? [])
+        return !empty(static::RELATION_LIST)
+            ? $model->load(static::RELATION_LIST ?? [])
             : $model
         ;
     }

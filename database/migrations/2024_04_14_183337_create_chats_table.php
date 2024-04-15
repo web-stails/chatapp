@@ -15,7 +15,8 @@ return new class extends Migration
             Schema::create('chats', function (Blueprint $table) {
                 $table->id();
                 $table->string('title')->comment('Название чата');
-                $table->timestamps();
+                $table->timestamp('created_at')->useCurrent()->index();
+                $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             });
         }
     }

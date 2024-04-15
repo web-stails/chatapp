@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * Пользователи системы.
  *
- * @property string $id                    ID.
+ * @property integer $id                    ID.
  * @property string $last_name             Имя пользователя.
  * @property string $first_name            Фамилия.
  * @property string $email                 почта.
